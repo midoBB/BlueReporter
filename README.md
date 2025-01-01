@@ -7,6 +7,13 @@ BlueReporter is a Python script designed to report the battery levels of connect
 ```terminal
 pip install pydbus PyGObject
 ```
+> This should be ran on the main user environment
+
+Or on Ubuntu/Debian
+
+```terminal
+sudo apt install python3-pydbus python3-gi python3-gi-cairo
+```
 
 ## Run the Script:
 
@@ -19,10 +26,10 @@ python bluereporter.py
 Add the following to your Polybar config:
 
 ```ini
-[module/bluetooth_battery]
+[module/bluetooth]
 type = custom/script
-exec = python /path/to/bluereporter.py
-interval = 60
+exec = /path/to/bluereporter.py
+interval = 120
 ```
 
 ## Integration with Waybar:
@@ -30,8 +37,12 @@ interval = 60
 Add this to your Waybar config:
 
 ```json
-"custom/bluetooth_battery": {
-    "exec": "python /path/to/bluereporter.py",
-    "interval": 60
-}
++  "custom/bluetooth": {
++      "exec": "path/to/bluereporter.py 2> /dev/null",
++      "return-type": "json",
++      "interval": 120,
++      "format": "{}",
++      "on-click": "blueman-manager",
++      "tooltip": true
++  }
 ```
